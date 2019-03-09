@@ -14,7 +14,6 @@
 
 	/* To use BIMC based bus governor */
 	gpubw: qcom,gpubw {
-		label = "gpubw";
 		compatible = "qcom,devbw";
 		governor = "bw_hwmon";
 		qcom,src-dst-ports = <26 512>;
@@ -50,9 +49,9 @@
 
 		qcom,chipid = <0x04000500>;
 
-		qcom,initial-pwrlevel = <3>;
+		qcom,initial-pwrlevel = <2>;
 
-		qcom,idle-timeout = <80>; //msec
+		qcom,idle-timeout = <8>; //<HZ/12>
 		qcom,strtstp-sleepwake;
 
 		/* Clocks = KGSL_CLK_CORE | KGSL_CLK_IFACE | KGSL_CLK_MEM |
@@ -126,7 +125,7 @@
 
 			qcom,gpu-pwrlevel@2 {
 				reg = <2>;
-				qcom,gpu-freq = <550000000>;
+				qcom,gpu-freq = <465000000>;
 				qcom,bus-freq = <3>;
 			};
 
@@ -141,8 +140,8 @@
 				qcom,gpu-freq = <220000000>;
 				qcom,bus-freq = <1>;
 			};
-                       
-                        qcom,gpu-pwrlevel@5 {
+			
+			qcom,gpu-pwrlevel@5 {
 				reg = <5>;
 				qcom,gpu-freq = <19200000>;
 				qcom,bus-freq = <0>;

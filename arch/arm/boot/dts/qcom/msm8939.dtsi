@@ -27,25 +27,8 @@
 	qcom,msm-id = <239 0>, <241 0>, <263 0>;
 
 	chosen {
-		bootargs = "boot_cpus=0,4,5,6,7 sched_enable_hmp=1 androidboot.selinux=permissive";
+		bootargs = "boot_cpus=0 androidboot.earlyboot_cpus=2,4,6 sched_enable_hmp=1";
 	};
-
-        firmware: firmware {
-                 android {
-                         compatible = "android,firmware";
-                         fstab {
-                                 compatible = "android,fstab";
-                                 system {
-                                         compatible = "android,system";
-                                         dev = "/dev/block/platform/soc.0/7824900.sdhci/by-name/system";
-                                         type = "ext4";
-                                         mnt_flags = "ro,barrier=1,discard";
-                                         fsmgr_flags = "wait";
-                                         status = "ok";
-                                 };
-                         };
-                 };
-        };
 };
 
 &soc {
@@ -146,7 +129,11 @@
 			<  960000000 12>,
 			< 1113600000 14>,
 			< 1344000000 17>,
-			< 1459200000 20>;
+			< 1459200000 20>,
+			< 1497600000 21>,
+			< 1651200000 22>,
+			< 1820800000 23>,
+			< 2000000000 24>;
 
 		qcom,speed2-bin-v2-cci =
 			<          0 0>,
@@ -171,8 +158,11 @@
 			< 1113600000 14>,
 			< 1344000000 17>,
 			< 1459200000 20>,
+			< 1459200000 20>,
 			< 1497600000 21>,
-			< 1651200000 26>;
+			< 1651200000 22>,
+			< 1820800000 23>,
+			< 2000000000 24>;
 
 		qcom,speed4-bin-v0-cci =
 			<          0 0>,
@@ -198,7 +188,9 @@
 			< 1344000000 17>,
 			< 1459200000 20>,
 			< 1497600000 21>,
-			< 1651200000 26>;
+			< 1651200000 22>,
+			< 1820800000 23>,
+			< 2000000000 24>;
 
 		qcom,speed5-bin-v0-cci =
 			<          0 0>,
@@ -224,7 +216,9 @@
 			< 1344000000 17>,
 			< 1459200000 20>,
 			< 1497600000 21>,
-			< 1651200000 26>;
+			< 1651200000 22>,
+			< 1820800000 23>,
+			< 2000000000 24>;
 
 		qcom,speed5-bin-v6-cci =
 			<          0 0>,
@@ -248,7 +242,6 @@
 	};
 
 	cpubw: qcom,cpubw {
-		label = "cpubw";
 		compatible = "qcom,devbw";
 		governor = "cpufreq";
 		qcom,src-dst-ports = <1 512>;
@@ -263,7 +256,6 @@
 	};
 
 	mincpubw: qcom,mincpubw {
-		label = "mincpubw";
 		compatible = "qcom,devbw";
 		governor = "powersave";
 		qcom,src-dst-ports = <1 512>;
@@ -290,12 +282,14 @@
 			<  1344000 6079 >,
 			<  1459200 6079 >,
 			<  1497600 6079 >,
-			<  1651200 6079 >;
+			<  1651200 6079 >,
+			<  1820800 6079 >,
+			<  2000000 6079 >;
 		cpu-to-dev-map-4 =
 			<  200000 1525 >,
 			<  249600 2636 >,
 			<  499200 2636 >,
-			<  800000 5346 >,
+			<  800000 2636 >,
 			<  998400 6079 >,
 			< 1113600 6079 >;
 		};
@@ -311,8 +305,9 @@
 			<  1113600 2636 >,
 			<  1344000 5346 >,
 			<  1497600 5346 >,
-			<  1612800 5346 >,
-			<  1651200 5346 >;
+			<  1651200 5346 >,
+			<  1820800 5346 >,
+			<  2000000 5346 >;
 		cpu-to-dev-map-4 =
 			<  200000 2636 >,
 			<  249600 2636 >,
@@ -335,7 +330,9 @@
 			< 1344000  595200 >,
 			< 1459200  595200 >,
 			< 1497600  595200 >,
-			< 1651200  595200 >;
+			< 1651200  595200 >,
+			< 1820800  595200 >,
+			< 2000000  595200 >;
 		cpu-to-dev-map-4 =
 			<  200000 200000 >,
 			<  249600 200000 >,
@@ -369,12 +366,14 @@
 			 <  400000 >,
 			 <  533330 >,
 			 <  800000 >,
-                         <  960000 >,
+             <  960000 >,
 			 < 1113600 >,
 			 < 1344000 >,
 			 < 1459200 >,
 			 < 1497600 >,
-			 < 1651200 >;
+			 < 1651200 >,
+			 < 1820800 >,
+			 < 2000000 >;
 		qcom,cpufreq-table-4 =
 			 <  200000 >,
 			 <  249600 >,
@@ -390,12 +389,10 @@
 		interrupts = <1 7 0xff00>;
 	};
 
-	#ifndef CONFIG_FRANCO_THERMAL
 	qcom,msm-thermal {
 		qcom,core-control-mask = <0xFF>;
 		qcom,freq-mitigation-control-mask = <0xFF>;
 	};
-	#endif
 
 	jtag_fuse: jtagfuse@5e01c {
 		compatible = "qcom,jtag-fuse";
